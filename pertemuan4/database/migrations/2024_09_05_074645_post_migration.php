@@ -12,8 +12,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->text('content1');
             $table->timestamps();
         });
+
     }
     public function down(): void
     {
