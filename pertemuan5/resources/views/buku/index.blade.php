@@ -16,7 +16,8 @@
                 <th class="text-center">Judul Buku</th>
                 <th class="text-center">Penulis</th>
                 <th class="pe-5 text-center">Harga</th>
-                <th class="pe-5 text-center">Tanggal Terbit</th>
+                <th class="text-center">Tanggal Terbit</th>
+                <th class="pe-5 text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -29,18 +30,26 @@
                 <td class="text-center">{{ $buku->judul }}</td>
                 <td class="text-center">{{ $buku->penulis }}</td>
                 <td class="text-center">{{ "Rp ".number_format($buku->harga, 2, ',', '.') }}</td>
-                <td class="pe-5 text-center">{{ $buku->tgl_terbit->format('d/m/Y') }}</td>
+                <td class="text-center">{{ $buku->tgl_terbit->format('d/m/Y') }}</td>
+                <td class="pe-5 text-center">
+                    <form action="{{route('buku.destroy',$buku->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button onclick="=return confirm('Yakin mau dihapus?')" type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="5" class="text-end pe-5"><b>Total Banyaknya Buku :</b> {{ $jumlah_buku }}</td>
+                <td colspan="6" class="text-end pe-5"><b>Total Banyaknya Buku :</b> {{ $jumlah_buku }}</td>
             </tr>
             <tr>
-                <td colspan="5" class="text-end pe-5"><b>Total Harga Buku :</b> {{"Rp ".number_format($total_harga, 2, ',', '.') }}</td>
+                <td colspan="6" class="text-end pe-5"><b>Total Harga Buku :</b> {{"Rp ".number_format($total_harga, 2, ',', '.') }}</td>
             </tr>
         </tfoot>
     </table>
+    <a href="{{route('buku.create')}}" class="btn btn-primary float-end">Tambah Buku</a>
 </body>
 </html>
