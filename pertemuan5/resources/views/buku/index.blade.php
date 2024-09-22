@@ -34,8 +34,9 @@
                 <td class="pe-5 text-center">
                     <form action="{{route('buku.destroy',$buku->id)}}" method="POST">
                         @csrf
+                        <a class="btn btn-primary" href="{{route('buku.edit', $buku->id)}}" >Edit</a>
                         @method('DELETE')
-                        <button onclick="=return confirm('Yakin mau dihapus?')" type="submit" class="btn btn-danger">Hapus</button>
+                        <button onclick="return confirm('Yakin mau dihapus?')" type="submit" class="btn btn-danger">Hapus</button>
                     </form>
                 </td>
             </tr>
