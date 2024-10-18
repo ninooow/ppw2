@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Toko Buku</title>
-</head>
-<body>
+    @extends('layout.master')
+    @section('content')
     <div class="container">
         <h4 class="mt-5">Tambah Buku</h4>
+        @if(count($errors)>0)
+            <ul class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        @endif
         <form method="post" action="{{route('buku.store')}}">
             @csrf
             <div class="form-group row mt-3">
@@ -43,5 +42,4 @@
             
         </form>
     </div>
-</body>
-</html>
+    @endsection

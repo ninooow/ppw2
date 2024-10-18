@@ -10,3 +10,4 @@ Route::post('/buku', [BukuController::class,'store'])->name('buku.store'); //pos
 Route::delete('/buku/{id}', [BukuController::class,'destroy'])->name('buku.destroy');
 Route::get('/buku/{id}/edit',[BukuController::class,'edit'])->name('buku.edit');
 Route::put('/buku/{id}',[BukuController::class,'update'])->name('buku.update');
+Route::get('/buku/search',[BukuController::class, 'search'])->name('buku.search');

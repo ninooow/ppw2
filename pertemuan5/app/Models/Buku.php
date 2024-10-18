@@ -12,4 +12,5 @@ class Buku extends Model
     protected $casts = [
         'tgl_terbit'=>'date'
     ];
+    protected $dates = ['tgl_terbit'];
 }

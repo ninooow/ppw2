@@ -57,16 +57,20 @@
             </tr>
         @endforeach
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="6" class="text-end pe-5"><b>Total Banyaknya Buku :</b> {{ $jumlah_buku }}</td>
-            </tr>
-            <tr>
-                <td colspan="6" class="text-end pe-5"><b>Total Harga Buku :</b> {{"Rp ".number_format($total_harga, 2, ',', '.') }}</td>
-            </tr>
-        </tfoot>
     </table>
     <div>{{$data_buku->links('pagination::bootstrap-5')}}</div>
     <a href="{{route('buku.create')}}" class="btn btn-primary float-end">Tambah Buku</a>
+    @if(count($data_buku))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" aria-live="assertive">
+            Ditemukan <strong>{{ count($data_buku) }}</strong> data dengan kata: <strong>{{ $cari }}</strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @else
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h5>Data "{{ $cari }}" tidak ditemukan</h5>
+            <a href="/buku" class="btn btn-warning">Kembali</a>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 </body>
 </html>
