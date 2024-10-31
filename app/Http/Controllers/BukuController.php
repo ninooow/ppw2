@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class BukuController extends Controller
 {
+    public function __contstruct(){
+        $this->middleware('auth');
+    }
     public function search(Request $request){
         $batas = 5;
         $cari = $request->kata;

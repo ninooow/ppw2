@@ -45,6 +45,17 @@
                     </div>
 
                     <div class="mb-3 row">
+                        <label for="level" class="col-md-4 col-form-label text-md-end text-start">Level</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="level" name="level" required>
+                                <option value="" disabled selected>Pilih Level</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
                         <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Register">
                     </div>
                 </form>
