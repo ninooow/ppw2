@@ -2,7 +2,7 @@
     @section('content')
     <div class="container">
         <h4 class="mt-5">Tambah Buku</h4>
-        <form method="post" action="{{ route('buku.update', $buku->id) }}">
+        <form method="post" action="{{ route('buku.update', $buku->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group row mt-3">

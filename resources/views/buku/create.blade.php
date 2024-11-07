@@ -9,7 +9,7 @@
                 @endforeach
             </ul>
         @endif
-        <form method="post" action="{{route('buku.store')}}">
+        <form method="post" action="{{route('buku.store')}}" enctype="multipart/form-data">
             @csrf
             <div class="form-group row mt-3">
                 <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Judul</label>
