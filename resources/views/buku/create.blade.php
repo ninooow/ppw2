@@ -35,6 +35,27 @@
                     <input type="date" name="tgl_terbit" class="form-control form-control-lg" id="tanggal_terbit">
                 </div>
             </div>
+            <div class="col-span-full mt-6">
+                <label for="thumbnail" class="block text-sm font-medium leading-6 text-gray-900">Thumbnail</label>
+                <div class="mt-2">
+                    <input type="file" name="thumbnail" id="thumbnail">
+                </div>
+            </div>
+            <div class="col-span-full mt-5">
+                <label for="gallery" class="block text-sm font-medium leading-6 text-gray-900">Gallery</label>
+                <div class="mt-2" id="fileinput_wrapper">
+                </div>
+                <div class="btn btn-dark">
+                    <a id="tambah" onclick="addFileInput()">Tambah Data</a>
+                </div>
+
+                <script type="text/javascript">
+                    function addFileInput() {
+                        var div = document.getElementById('fileinput_wrapper');
+                        div.innerHTML += '<input type="file" name="gallery[]" id="gallery" class="block w-full mb-5" style="margin-bottom:5px;">';
+                    };
+                </script>
+            </div>
             <div class="form-group row mt-5 justify-content-between">
                 <a href="{{'/buku'}}" class="col-sm-2 btn btn-warning">Kembali</a>
                 <button type="submit" class="col-sm-2 btn btn-primary">Simpan</button>

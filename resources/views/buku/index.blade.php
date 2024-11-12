@@ -23,6 +23,7 @@
         <thead>
             <tr>
                 <th class="ps-5 text-center">Nomor</th>
+                <th class="text-center">Cover</th>
                 <th class="text-center">Judul Buku</th>
                 <th class="text-center">Penulis</th>
                 <th class="pe-5 text-center">Harga</th>
@@ -38,6 +39,9 @@
         @foreach($data_buku as $index => $buku)
             <tr>
                 <td class="ps-5 text-center">{{$buku->id}}</td>
+                <td class="relative h-10 w-10">
+                    <img class = "h-full w-full rounded-full object-cover object-center" src="{{asset($buku->filepath)}}" alt=""/>
+                </td>
                 <td class="text-center">{{ $buku->judul }}</td>
                 <td class="text-center">{{ $buku->penulis }}</td>
                 <td class="text-center">{{ "Rp ".number_format($buku->harga, 0, ',', '.') }}</td>
@@ -57,10 +61,10 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6" class="text-end pe-5"><b>Total Banyaknya Buku :</b> {{ $jumlah_buku }}</td>
+                <td colspan="7" class="text-end pe-5"><b>Total Banyaknya Buku :</b> {{ $jumlah_buku }}</td>
             </tr>
             <tr>
-                <td colspan="6" class="text-end pe-5"><b>Total Harga Buku :</b> {{"Rp ".number_format($total_harga, 2, ',', '.') }}</td>
+                <td colspan="7" class="text-end pe-5"><b>Total Harga Buku :</b> {{"Rp ".number_format($total_harga, 2, ',', '.') }}</td>
             </tr>
         </tfoot>
     </table>
