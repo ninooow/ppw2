@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perpustakaan</title>
+
+<!-- CSS Internal -->
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #f0f4f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    h1 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .book-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-content {
+        padding: 15px;
+    }
+
+    .card-content h3 {
+        color: #1abc9c;
+        margin-bottom: 10px;
+    }
+
+    .card-content p {
+        color: #34495e;
+        margin: 5px 0;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .pagination button {
+        background-color: #1abc9c;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        margin: 0 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .pagination button:hover {
+        background-color: #16a085;
+    }
+
+    .pagination button[disabled] {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>PERPUSTAKAAN</h1>
+        <div id="book-list" class="card-container"></div>
+        <div class="pagination">
+            <button id="prev-page" disabled>Previous</button>
+            <span id="current-page">Page 1</span>
+            <button id="next-page">Next</button>
+        </div>
+    </div>
+
+<script>
+    // Variabel untuk menyimpan halaman saat ini
+    let currentPage = 1;
+    let lastPage = 1;
+
+    // Fungsi untuk mengambil data buku dari API
+    async function fetchBooks(page = 1) {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/books?page=${page}`);
+            const data = await response.json();
+
+            if (data.success) {
+                displayBooks(data.data.data);
+                currentPage = data.data.current_page;
+                lastPage = data.data.last_page;
+                updatePaginationButtons();
+            }
+        } catch (error) {
+            console.error('Gagal mengambil data buku:', error);
+        }
+    }
+
+    // Fungsi untuk menampilkan data buku
+    function displayBooks(books) {
+        const bookList = $('#book-list');
+        bookList.empty();
+
+        books.forEach((book) => {
+            const card = `
+                <div class="card">
+                    <img src="${book.filepath}" alt="${book.judul}" class="book-img">
+                    <div class="card-content">
+                        <h3>${book.judul}</h3>
+                        <p><strong>Penulis:</strong> ${book.penulis}</p>
+                        <p><strong>Harga:</strong> Rp ${book.harga.toLocaleString()}</p>
+                        <p><strong>Tanggal Terbit:</strong> ${new Date(book.tgl_terbit).toLocaleDateString()}</p>
+                    </div>
+                </div>
+            `;
+            bookList.append(card);
+        });
+    }
+
+    // Fungsi untuk mengupdate tombol pagination
+    function updatePaginationButtons() {
+        $('#current-page').text(`Page ${currentPage}`);
+        $('#prev-page').prop('disabled', currentPage === 1);
+        $('#next-page').prop('disabled', currentPage === lastPage);
+    }
+
+    // Event Listener untuk tombol Previous dan Next
+    $('#prev-page').on('click', () => {
+        if (currentPage > 1) {
+            fetchBooks(currentPage - 1);
+        }
+    });
+
+    $('#next-page').on('click', () => {
+        if (currentPage < lastPage) {
+            fetchBooks(currentPage + 1);
+        }
+    });
+
+    // Panggil fungsi fetchBooks saat halaman dimuat
+    $(document).ready(() => {
+        fetchBooks();
+    });
+</script>
+</body>
+</html>
