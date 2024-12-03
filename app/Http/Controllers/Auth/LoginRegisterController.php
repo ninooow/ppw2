@@ -43,9 +43,9 @@ class LoginRegisterController extends BaseController
             'name' => 'required|string|max:250',
             'email' => 'required|email|max:250|unique:users',
             'password' => 'required|min:8|confirmed',
-            'level' => 'required|in:admin,user',
+            'level' => 'required|in:admin,user,internal_reviewer',
         ]);
-
+        
         User::create([
             'name' => $request->name,
             'email' => $request->email,
