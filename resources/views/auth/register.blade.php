@@ -49,6 +49,7 @@
                         <div class="col-md-6">
                             <select class="form-control" id="level" name="level" required>
                                 <option value="" disabled selected>Pilih Level</option>
+                                <option value="internal_reviewer">Internal Reviewer</option>
                                 <option value="admin">Admin</option>
                                 <option value="user">User</option>
                             </select>

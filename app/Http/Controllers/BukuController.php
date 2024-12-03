@@ -24,7 +24,9 @@ class BukuController extends Controller
     public function index(){
         $batas = 5;
         $jumlah_buku = Buku::count();
-        $data_buku = Buku::orderBy('id','asc')->paginate($batas);
+        $data_buku = Buku::with('reviews.tags', 'reviews.user')
+            ->orderBy('id', 'asc')
+            ->paginate($batas);
         $no= $batas*($data_buku->currentPage()-1);
         // $data_buku = Buku::all()->sortBy('judul');
         // $jumlah_buku = $data_buku->count();

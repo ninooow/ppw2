@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\BukuController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function() {
     return view('welcome');
@@ -24,3 +25,8 @@ Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/logout', 'logout')->name('logout');
 });
 Route::delete('/buku/{buku}/gallery/{gallery}', [BukuController::class, 'deleteGalleryImage'])->name('buku.deleteGalleryImage');
+
+Route::controller(ReviewController::class)->group(function() {
+    Route::get('/reviews/create', 'create')->name('reviews.create');
+    Route::post('/reviews/store', 'store')->name('reviews.store');
+});

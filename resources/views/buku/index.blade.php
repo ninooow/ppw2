@@ -28,6 +28,7 @@
                 <th class="text-center">Penulis</th>
                 <th class="pe-5 text-center">Harga</th>
                 <th class="text-center">Tanggal Terbit</th>
+                <th class="text-center">Reviu</th>
                 @if (Auth::user()->level=='admin')
                     <th class="pe-5 text-center">Aksi</th>
                 @endif
@@ -46,6 +47,17 @@
                 <td class="text-center">{{ $buku->penulis }}</td>
                 <td class="text-center">{{ "Rp ".number_format($buku->harga, 0, ',', '.') }}</td>
                 <td class="text-center">{{ $buku->tgl_terbit->format('d/m/Y') }}</td>
+                <td class="text-start">
+                    @foreach($buku->reviews as $review)
+                        <blockquote class="blockquote text-start fs-6">
+                            <p class="mb-0">{{ $review->txt_review }}</p>
+                        </blockquote>
+                        <p class="blockquote-footer">{{ $review->user->name }}</p>
+                        @foreach($review->tags as $tag)
+                            <span class="badge bg-primary">{{ $tag->name_tag}}</span>
+                        @endforeach
+                    @endforeach
+                </td>
                 @if (Auth::user()->level=='admin')
                     <td class="pe-5 text-center">
                         <form action="{{route('buku.destroy',$buku->id)}}" method="POST">
@@ -61,16 +73,20 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="7" class="text-end pe-5"><b>Total Banyaknya Buku :</b> {{ $jumlah_buku }}</td>
+                <td colspan="8" class="text-end pe-5"><b>Total Banyaknya Buku :</b> {{ $jumlah_buku }}</td>
             </tr>
             <tr>
-                <td colspan="7" class="text-end pe-5"><b>Total Harga Buku :</b> {{"Rp ".number_format($total_harga, 2, ',', '.') }}</td>
+                <td colspan="8" class="text-end pe-5"><b>Total Harga Buku :</b> {{"Rp ".number_format($total_harga, 2, ',', '.') }}</td>
             </tr>
         </tfoot>
     </table>
     <div>{{$data_buku->links('pagination::bootstrap-5')}}</div>
-    @if (Auth::user()->level=='admin')
-        <a href="{{route('buku.create')}}" class="btn btn-primary float-end">Tambah Buku</a>
+    @if (Auth::user()->level == 'admin' || Auth::user()->level == 'internal_reviewer')
+    <a href="{{ route('reviews.create') }}" class="btn btn-primary float-end">Tambah Review</a>
+    @endif
+
+    @if (Auth::user()->level == 'admin')
+        <a href="{{ route('buku.create') }}" class="btn btn-primary float-end">Tambah Buku</a>
     @endif
 </body>
 @endsection
