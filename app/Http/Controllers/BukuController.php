@@ -31,7 +31,8 @@ class BukuController extends Controller
         // $data_buku = Buku::all()->sortBy('judul');
         // $jumlah_buku = $data_buku->count();
         $total_harga = $data_buku->sum('harga');
-        return view('buku.index', compact('data_buku', 'jumlah_buku', 'total_harga', 'no'));
+        $data_pick = Buku::all();
+        return view('buku.index', compact('data_pick','data_buku', 'jumlah_buku', 'total_harga', 'no'));
     }
 
     public function create(){
@@ -44,7 +45,10 @@ class BukuController extends Controller
             'judul'=>'required|string',
             'penulis'=>'required|string|max:30',
             'harga'=>'required|numeric',
-            'tgl_terbit'=>'required|date'
+            'tgl_terbit'=>'required|date',
+            'editorial_pick'=>'required|boolean',
+            'keterangan'=>'required|string',
+            'diskon'=>'required|integer',
         ]);
 
         $fileName = time().'_'.$request->thumbnail->getClientOriginalName();
@@ -60,6 +64,9 @@ class BukuController extends Controller
         $buku->tgl_terbit = $request->tgl_terbit;
         $buku->filename = $fileName;
         $buku->filepath = '/storage/'.$filePath;
+        $buku->editorial_pick = $request->editorial_pick;
+        $buku->keterangan = $request->keterangan;
+        $buku->diskon = $request->diskon;
         $buku->save();
 
         if($request->file('gallery')){
@@ -105,6 +112,9 @@ class BukuController extends Controller
         $buku->tgl_terbit = $request->tgl_terbit;
         $buku->filename = $fileName;
         $buku->filepath = '/storage/'.$filePath;
+        $buku->editorial_pick = $request->editorial_pick;
+        $buku->keterangan = $request->keterangan;
+        $buku->diskon = $request->diskon;
         $buku->save();
 
         if($request->file('gallery')){
@@ -133,4 +143,5 @@ class BukuController extends Controller
         $gallery->delete();
         return redirect()->route('buku.edit', $buku->id)->with('pesanHapus', 'Gambar berhasil dihapus.');
     }
+    
 }
